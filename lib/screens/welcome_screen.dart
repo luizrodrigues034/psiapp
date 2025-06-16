@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psiapp/screens/tutorial_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'welcome';
@@ -8,9 +9,50 @@ class WelcomeScreen extends StatefulWidget {
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    )..repeat(reverse: true);
+
+    _animation = Tween<double>(
+      begin: 1.0,
+      end: 1.2,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      firebaseConnection();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void firebaseConnection() async {
+    await Future.delayed(Duration(seconds: 3));
+
+    Navigator.pushNamed(context, TutorialScreen.id);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: ScaleTransition(
+          scale: _animation,
+          child: Image.asset('assets/images/logo.png', width: 200, height: 200),
+        ),
+      ),
+    );
   }
 }

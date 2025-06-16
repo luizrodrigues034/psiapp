@@ -17,8 +17,10 @@ class PsiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(),
+      title: 'PsiApp',
+      theme: ThemeData.light().copyWith(
+        scaffoldBackgroundColor: Color(0xFFFBF4EC),
+      ),
       home: WelcomeScreen(),
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
