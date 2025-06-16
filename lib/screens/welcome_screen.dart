@@ -18,6 +18,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   void initState() {
     super.initState();
 
+    animateLogo();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      firebaseConnection();
+    });
+  }
+
+  void animateLogo() {
     _controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: 1),
@@ -27,9 +34,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       begin: 1.0,
       end: 1.2,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      firebaseConnection();
-    });
   }
 
   @override
@@ -41,7 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   void firebaseConnection() async {
     await Future.delayed(Duration(seconds: 3));
 
-    Navigator.pushNamed(context, TutorialScreen.id);
+    Navigator.pushReplacementNamed(context, TutorialScreen.id);
   }
 
   @override
