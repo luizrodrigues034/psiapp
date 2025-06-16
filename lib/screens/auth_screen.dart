@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psiapp/utils/colors.dart';
 
 class AuthScreen extends StatefulWidget {
   static String id = 'auth';
@@ -9,6 +10,18 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  int _campoSelecionado = 0;
+  //1 = Cadastro || 2 = Login
+  void changeForm(int choiceForm) {
+    setState(() {
+      if (choiceForm == 1) {
+        _campoSelecionado = choiceForm;
+      } else if (choiceForm == 2) {
+        _campoSelecionado = 2;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +44,63 @@ class _AuthScreenState extends State<AuthScreen> {
               ],
             ),
           ),
-          ElevatedButton(onPressed: () {}, child: Text('Cadastrar-se')),
-          ElevatedButton(onPressed: () {}, child: Text('Entrar')),
+          SizedBox(height: 25),
+          _campoSelecionado == 0 || _campoSelecionado == 2
+              ? ButtonFormat(
+                  conteudo: 'Cadastrar-se',
+                  metodo: () {
+                    changeForm(1);
+                  },
+                  cor: const Color.fromARGB(164, 126, 91, 159),
+                )
+              : Text(''),
+          SizedBox(height: 25),
+          _campoSelecionado == 0 || _campoSelecionado == 1
+              ? ButtonFormat(
+                  conteudo: 'LogIn',
+                  metodo: () {
+                    changeForm(2);
+                  },
+                  cor: kMainColor,
+                )
+              : SizedBox(),
         ],
+      ),
+    );
+  }
+}
+
+class ButtonFormat extends StatelessWidget {
+  final VoidCallback metodo;
+  final String conteudo;
+  final Color cor;
+  const ButtonFormat({
+    super.key,
+    required this.metodo,
+    required this.conteudo,
+    required this.cor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 60),
+      child: ElevatedButton(
+        onPressed: () {
+          metodo();
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: cor,
+          minimumSize: Size(double.infinity, 50),
+        ),
+        child: Text(
+          conteudo,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
       ),
     );
   }
