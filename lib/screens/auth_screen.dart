@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:psiapp/components/button_format.dart';
+import 'package:psiapp/main.dart';
+import 'package:psiapp/presentation/controllers/theme_controller.dart';
 import 'package:psiapp/utils/colors.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -23,8 +26,33 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   @override
+  void initState() {
+    themeController.addListener(callback);
+    super.initState();
+  }
+
+  void callback() {
+    setState(() {
+      print('Callback Aq');
+    });
+  }
+
+  void dispose() {
+    themeController.removeListener(callback);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: Switch(
+          value: themeController.colorController,
+          onChanged: (_) {
+            themeController.toggleColor();
+          },
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -65,42 +93,6 @@ class _AuthScreenState extends State<AuthScreen> {
                 )
               : SizedBox(),
         ],
-      ),
-    );
-  }
-}
-
-class ButtonFormat extends StatelessWidget {
-  final VoidCallback metodo;
-  final String conteudo;
-  final Color cor;
-  const ButtonFormat({
-    super.key,
-    required this.metodo,
-    required this.conteudo,
-    required this.cor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 60),
-      child: ElevatedButton(
-        onPressed: () {
-          metodo();
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: cor,
-          minimumSize: Size(double.infinity, 50),
-        ),
-        child: Text(
-          conteudo,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
       ),
     );
   }
