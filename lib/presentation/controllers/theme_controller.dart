@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:psiapp/utils/colors.dart';
 
-class ThemeController extends ChangeNotifier {
+class ThemeController extends ValueNotifier<bool> {
   bool colorController = false;
 
+  ThemeController() : super(false);
+
   void toggleColor() {
-    colorController = !colorController;
+    value = !value;
     notifyListeners();
   }
 }

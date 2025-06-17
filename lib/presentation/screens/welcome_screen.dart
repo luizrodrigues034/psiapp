@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psiapp/screens/tutorial_screen.dart';
+import 'package:psiapp/presentation/screens/tutorial_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'welcome';

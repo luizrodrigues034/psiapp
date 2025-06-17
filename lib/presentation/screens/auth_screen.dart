@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psiapp/components/button_format.dart';
+import 'package:psiapp/presentation/components/button_format.dart';
 import 'package:psiapp/main.dart';
 import 'package:psiapp/presentation/controllers/theme_controller.dart';
 import 'package:psiapp/utils/colors.dart';
@@ -26,30 +26,18 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   @override
-  void initState() {
-    themeController.addListener(callback);
-    super.initState();
-  }
-
-  void callback() {
-    setState(() {
-      print('Callback Aq');
-    });
-  }
-
-  void dispose() {
-    themeController.removeListener(callback);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Switch(
-          value: themeController.colorController,
-          onChanged: (_) {
-            themeController.toggleColor();
+        leading: ValueListenableBuilder(
+          valueListenable: themeController,
+          builder: (context, value, chield) {
+            return Switch(
+              value: themeController.colorController,
+              onChanged: (_) {
+                themeController.toggleColor();
+              },
+            );
           },
         ),
       ),

@@ -1,8 +1,8 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:psiapp/components/structure_cards.dart';
-import 'package:psiapp/screens/auth_screen.dart';
+import 'package:psiapp/presentation/components/structure_cards.dart';
+import 'package:psiapp/presentation/screens/auth_screen.dart';
 import 'package:psiapp/utils/colors.dart';
 
 class TutorialScreen extends StatefulWidget {

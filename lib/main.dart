@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:psiapp/presentation/controllers/theme_controller.dart';
-import 'package:psiapp/screens/auth_screen.dart';
-import 'package:psiapp/screens/home_screen.dart';
-import 'package:psiapp/screens/patient_screen.dart';
-import 'package:psiapp/screens/register_patient_screen.dart';
-import 'package:psiapp/screens/tutorial_screen.dart';
-import 'package:psiapp/screens/welcome_screen.dart';
+import 'package:psiapp/presentation/screens/auth_screen.dart';
+import 'package:psiapp/presentation/screens/home_screen.dart';
+import 'package:psiapp/presentation/screens/patient_screen.dart';
+import 'package:psiapp/presentation/screens/register_patient_screen.dart';
+import 'package:psiapp/presentation/screens/tutorial_screen.dart';
+import 'package:psiapp/presentation/screens/welcome_screen.dart';
 import 'package:psiapp/utils/colors.dart';
 
 void main() {
@@ -20,16 +20,14 @@ class PsiApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: themeController,
-      builder: (context, chield) {
+    return ValueListenableBuilder(
+      valueListenable: themeController,
+      builder: (context, value, chield) {
         return MaterialApp(
           title: 'PsiApp',
           theme: ThemeData.light().copyWith(
             appBarTheme: AppBarTheme(backgroundColor: Colors.transparent),
-            scaffoldBackgroundColor: themeController.colorController
-                ? kBackGroundColor
-                : kMainColor,
+            scaffoldBackgroundColor: value ? kBackGroundColor : kMainColor,
           ),
           home: WelcomeScreen(),
           routes: {
